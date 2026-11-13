@@ -1,0 +1,310 @@
+﻿@model midtermproject.Models.User
+@{
+    Layout = null;
+    var firstName = string.IsNullOrWhiteSpace(Model.FullName)
+        ? "User"
+        : Model.FullName.Split(' ')[0];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Account - EasySet 24</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #111827;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 14px 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .brand-text {
+            color: #0369a1;
+            font-weight: 800;
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
+        .account-header-info {
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .account-header-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0c2d48;
+        }
+
+        .account-header-name {
+            font-size: 12px;
+            color: #0284c7;
+            margin-top: 2px;
+        }
+
+        .logout-link {
+            font-size: 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border: 1px solid #d1d5db;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+            .logout-link:hover {
+                background-color: #f3f4f6;
+                color: #111827;
+            }
+
+        /* Main Page Layout */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        /* Left Sidebar Card */
+        .sidebar-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px 24px;
+            width: 260px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        .sidebar-greeting {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-email {
+            font-size: 12px;
+            color: #374151;
+            word-break: break-all;
+        }
+
+        /* Right Main Info Card */
+        .main-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 36px 48px;
+            flex: 1;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+
+        .section-block {
+            margin-bottom: 38px;
+        }
+
+            .section-block:last-child {
+                margin-bottom: 0;
+            }
+
+        .section-header {
+            margin-left: 50px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: #374151;
+        }
+
+        /* 3-Column Grid for Basic Information */
+        .info-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px 24px;
+        }
+
+        /* 2-Column Grid for Contact Information */
+        .info-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px 24px;
+            max-width: 78%;
+        }
+
+        .field-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+
+        .field-value {
+            font-size: 13px;
+            color: #111827;
+        }
+
+        .field-muted {
+            font-size: 13px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="navbar">
+        <a href="#" class="brand">
+            <svg class="brand-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="21" r="13" fill="#026aa2" />
+                <path d="M6 23C12 26 24 22 33 11" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+                <path d="M31 9L36 7L34 12L31 9Z" fill="#f59e0b" />
+            </svg>
+            <span class="brand-text">EasySet 24</span>
+        </a>
+
+        <div class="account-header-info">
+            <div>
+                <div class="account-header-title">Your Account</div>
+                <div class="account-header-name">@Model.FullName</div>
+            </div>
+            <a asp-action="Logout" asp-controller="Account" class="logout-link">Logout</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-card">
+            <div class="sidebar-greeting">Hi, @firstName</div>
+            <div class="sidebar-email">@Model.Email</div>
+        </aside>
+
+        <!-- Right Details Card -->
+        <section class="main-card">
+            <!-- Basic Information -->
+            <div class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">Basic Information</h2>
+                    <p class="section-subtitle">Make Sure This Information Matches Your Travel ID, Like Your Passport Or License.</p>
+                </div>
+
+                <div class="info-grid-3">
+                    <div>
+                        <div class="field-label">Full Name</div>
+                        <div class="field-value">@Model.FullName</div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Date Of Birth</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.DateOfBirth) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.DateOfBirth) ? "Not Provided" : Model.DateOfBirth)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Bio</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.Bio) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.Bio) ? "Not Provided" : Model.Bio)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Disability</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.Disability) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.Disability) ? "None" : Model.Disability)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Accessibility Needs</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.AccessibilityNeeds) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.AccessibilityNeeds) ? "Not Provided" : Model.AccessibilityNeeds)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Gender</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.Gender) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.Gender) ? "Not Provided" : Model.Gender)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="section-block">
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-subtitle">Receive Account Activity Alerts And Trip Updates By Sharing This Information.</p>
+                </div>
+
+                <div class="info-grid-2">
+                    <div>
+                        <div class="field-label">Mobile Number</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.MobileNumber) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.MobileNumber) ? "Not Provided" : Model.MobileNumber)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Email</div>
+                        <div class="field-muted">@Model.Email</div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Emergency Contact</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.EmergencyContact) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.EmergencyContact) ? "Not Provided" : Model.EmergencyContact)
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="field-label">Address</div>
+                        <div class="@(string.IsNullOrWhiteSpace(Model.Address) ? "field-muted" : "field-value")">
+                            @(string.IsNullOrWhiteSpace(Model.Address) ? "Not Provided" : Model.Address)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
